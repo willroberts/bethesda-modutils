@@ -2,6 +2,7 @@ package modutils
 
 import (
 	"encoding/binary"
+	"fmt"
 	"io"
 )
 
@@ -67,6 +68,17 @@ func ReadRecord(r io.Reader) (*Record, error) {
 	}
 
 	return record, nil
+}
+
+func PrintRecord(r *Record) {
+	fmt.Println("Record Type:", string(r.Type))
+	fmt.Println("Record Size:", r.Size)
+	fmt.Println("Record Flags:", r.Flags)
+	fmt.Println("Record FormID:", r.FormID)
+	fmt.Println("Record Timestamp:", r.Timestamp)
+	fmt.Println("Record VCSInfo:", r.VCSInfo)
+	fmt.Println("Record Version:", r.Version)
+	//fmt.Println("Record Data:", r.Data)
 }
 
 func readBytes(n uint32, r io.Reader) ([]byte, error) {
