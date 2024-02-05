@@ -86,5 +86,5 @@ func (r *Record) Print() {
 	fmt.Println("Record Timestamp:", r.Timestamp)
 	fmt.Println("Record VCSInfo:", r.VCSInfo)
 	fmt.Println("Record Version:", r.Version)
-	fmt.Println("Record Data:", string(r.Data))
+	//fmt.Println("Record Data:", string(r.Data))
 }

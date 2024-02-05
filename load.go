@@ -27,5 +27,11 @@ func Load(filename string) (*ModFile, error) {
 		return nil, err
 	}
 
+	firstGroup, err := ReadGroup(m.rawBytes)
+	if err != nil {
+		return nil, err
+	}
+	firstGroup.Print()
+
 	return m, nil
 }
