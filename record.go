@@ -1,7 +1,7 @@
 package modutils
 
 import (
-	"encoding/binary"
+	"bytes"
 	"fmt"
 	"io"
 )
@@ -62,15 +62,23 @@ func ReadRecord(r io.Reader) (*Record, error) {
 		return nil, err
 	}
 
-	record.Data, err = readBytes(record.Size, r)
+	record.Data, err = readBytes(uint(record.Size), r)
 	if err != nil {
 		return nil, err
 	}
 
+	// Testing field parser.
+	record.Print()
+	field, err := ReadField(bytes.NewReader(record.Data))
+	if err != nil {
+		return nil, err
+	}
+	field.Print()
+
 	return record, nil
 }
 
-func PrintRecord(r *Record) {
+func (r *Record) Print() {
 	fmt.Println("Record Type:", string(r.Type))
 	fmt.Println("Record Size:", r.Size)
 	fmt.Println("Record Flags:", r.Flags)
@@ -78,27 +86,5 @@ func PrintRecord(r *Record) {
 	fmt.Println("Record Timestamp:", r.Timestamp)
 	fmt.Println("Record VCSInfo:", r.VCSInfo)
 	fmt.Println("Record Version:", r.Version)
-	//fmt.Println("Record Data:", r.Data)
-}
-
-func readBytes(n uint32, r io.Reader) ([]byte, error) {
-	buf := make([]byte, n)
-	_, err := io.ReadFull(r, buf)
-	return buf, err
-}
-
-func readUint32(r io.Reader) (uint32, error) {
-	buf := make([]byte, 4)
-	if _, err := io.ReadFull(r, buf); err != nil {
-		return 0, err
-	}
-	return binary.LittleEndian.Uint32(buf), nil
-}
-
-func readUint16(r io.Reader) (uint16, error) {
-	buf := make([]byte, 2)
-	if _, err := io.ReadFull(r, buf); err != nil {
-		return 0, err
-	}
-	return binary.LittleEndian.Uint16(buf), nil
+	fmt.Println("Record Data:", string(r.Data))
 }
