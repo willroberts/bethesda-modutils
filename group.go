@@ -68,10 +68,9 @@ func ReadGroup(r io.Reader) (*Group, error) {
 		return nil, err
 	}
 
-	// FIXME: nil pointer dereference?
-	//if err := g.readAllRecords(); err != nil {
-	//	return nil, err
-	//}
+	if err := g.readAllRecords(); err != nil {
+		return nil, err
+	}
 
 	return g, nil
 }
@@ -81,7 +80,7 @@ func (g *Group) readAllRecords() error {
 	reader := bytes.NewReader(g.rawData)
 	var bytesRead uint = 0
 
-	for bytesRead < uint(g.Size) {
+	for bytesRead < uint(g.Size)-24 {
 		r, err := ReadRecord(reader)
 		if err != nil {
 			return err
