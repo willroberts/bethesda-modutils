@@ -15,7 +15,9 @@ type Record struct {
 	VCSInfo   uint16
 	Version   uint16
 	Unknown   uint16
-	Data      []byte
+	Fields    []*Field
+
+	rawData []byte
 }
 
 func ReadRecord(r io.Reader) (*Record, error) {
@@ -62,21 +64,38 @@ func ReadRecord(r io.Reader) (*Record, error) {
 		return nil, err
 	}
 
-	record.Data, err = readBytes(uint(record.Size), r)
+	record.rawData, err = readBytes(uint(record.Size), r)
 	if err != nil {
 		return nil, err
 	}
 
-	_, err = ReadField(bytes.NewReader(record.Data))
+	record.Fields, err = record.readAllFields()
 	if err != nil {
 		return nil, err
 	}
-	//field.Print()
 
 	return record, nil
 }
 
+func (r *Record) readAllFields() ([]*Field, error) {
+	fields := make([]*Field, 0)
+	reader := bytes.NewReader(r.rawData)
+	var bytesRead uint = 0
+
+	for bytesRead < uint(r.Size) {
+		f, err := ReadField(reader)
+		if err != nil {
+			return nil, err
+		}
+		bytesRead += (4 + 2 + uint(f.Size)) // Type + Size + Data
+		fields = append(fields, f)
+	}
+
+	return fields, nil
+}
+
 func (r *Record) Print() {
+	fmt.Println("==========")
 	fmt.Println("Record Type:", string(r.Type))
 	fmt.Println("Record Size:", r.Size)
 	fmt.Println("Record Flags:", r.Flags)
@@ -84,5 +103,4 @@ func (r *Record) Print() {
 	fmt.Println("Record Timestamp:", r.Timestamp)
 	fmt.Println("Record VCSInfo:", r.VCSInfo)
 	fmt.Println("Record Version:", r.Version)
-	//fmt.Println("Record Data:", string(r.Data))
 }

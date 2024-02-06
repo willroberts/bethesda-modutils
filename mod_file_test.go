@@ -9,4 +9,7 @@ func TestLoadModFile(t *testing.T) {
 	}
 
 	modFile.Metadata.Print()
+	for _, f := range modFile.Metadata.Fields {
+		f.Print()
+	}
 }
