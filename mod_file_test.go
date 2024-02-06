@@ -2,8 +2,8 @@ package modutils
 
 import "testing"
 
-func TestLoad(t *testing.T) {
-	modFile, err := Load("testdata/fallout4-perks.esp")
+func TestLoadModFile(t *testing.T) {
+	modFile, err := LoadModFile("testdata/fallout4-perks.esp")
 	if err != nil {
 		t.Error(err)
 	}

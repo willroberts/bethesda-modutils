@@ -13,7 +13,7 @@ type ModFile struct {
 	rawBytes io.Reader
 }
 
-func Load(filename string) (*ModFile, error) {
+func LoadModFile(filename string) (*ModFile, error) {
 	m := &ModFile{}
 
 	b, err := os.ReadFile(filename)
