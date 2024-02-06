@@ -37,5 +37,5 @@ func (f *Field) Print() {
 	fmt.Println("==========")
 	fmt.Println("Field Type:", string(f.Type))
 	fmt.Println("Field Size:", f.Size)
-	//fmt.Println("Field Data:", string(f.Data))
+	fmt.Println("Field Data:", string(f.Data))
 }
