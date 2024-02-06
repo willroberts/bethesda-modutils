@@ -5,8 +5,8 @@ Tools for working with Bethesda's ESM and ESP file formats
 ## To Do
 
 - Parse Field data according to Field type
-- Docs
 - Linting
+- Docs
 - Add `espcat` utility
 - Add `espdiff` utility
 
