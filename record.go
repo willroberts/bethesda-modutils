@@ -86,7 +86,7 @@ func (r *Record) readAllFields() error {
 		if err != nil {
 			return err
 		}
-		bytesRead += (4 + 2 + uint(f.Size)) // Type + Size + Data
+		bytesRead += (6 + uint(f.Size)) // FieldHeaderSize
 		fields = append(fields, f)
 	}
 

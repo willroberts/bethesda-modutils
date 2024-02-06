@@ -1,6 +1,7 @@
 package modutils
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 )
@@ -13,7 +14,9 @@ type Group struct {
 	Timestamp  uint16
 	VCSInfo    uint16
 	Unknown    uint32
-	Data       []byte
+	Records    []*Record
+
+	rawData []byte
 }
 
 func ReadGroup(r io.Reader) (*Group, error) {
@@ -60,12 +63,35 @@ func ReadGroup(r io.Reader) (*Group, error) {
 		return nil, err
 	}
 
-	g.Data, err = readBytes(uint(g.Size)-24, r)
+	g.rawData, err = readBytes(uint(g.Size)-24, r)
 	if err != nil {
 		return nil, err
 	}
 
+	// FIXME: nil pointer dereference?
+	//if err := g.readAllRecords(); err != nil {
+	//	return nil, err
+	//}
+
 	return g, nil
+}
+
+func (g *Group) readAllRecords() error {
+	records := make([]*Record, 0)
+	reader := bytes.NewReader(g.rawData)
+	var bytesRead uint = 0
+
+	for bytesRead < uint(g.Size) {
+		r, err := ReadRecord(reader)
+		if err != nil {
+			return err
+		}
+		bytesRead += (24 + uint(r.Size)) // RecordHeaderSize
+		records = append(records, r)
+	}
+
+	g.Records = records
+	return nil
 }
 
 func (g *Group) Print() {
@@ -76,5 +102,4 @@ func (g *Group) Print() {
 	fmt.Println("Group Type:", string(g.GroupType))
 	fmt.Println("Group Timestamp:", g.Timestamp)
 	fmt.Println("Group VCSInfo:", g.VCSInfo)
-	//fmt.Println("Group Data:", string(g.Data))
 }
