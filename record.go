@@ -69,15 +69,14 @@ func ReadRecord(r io.Reader) (*Record, error) {
 		return nil, err
 	}
 
-	record.Fields, err = record.readAllFields()
-	if err != nil {
+	if err := record.readAllFields(); err != nil {
 		return nil, err
 	}
 
 	return record, nil
 }
 
-func (r *Record) readAllFields() ([]*Field, error) {
+func (r *Record) readAllFields() error {
 	fields := make([]*Field, 0)
 	reader := bytes.NewReader(r.rawData)
 	var bytesRead uint = 0
@@ -85,13 +84,14 @@ func (r *Record) readAllFields() ([]*Field, error) {
 	for bytesRead < uint(r.Size) {
 		f, err := ReadField(reader)
 		if err != nil {
-			return nil, err
+			return err
 		}
 		bytesRead += (4 + 2 + uint(f.Size)) // Type + Size + Data
 		fields = append(fields, f)
 	}
 
-	return fields, nil
+	r.Fields = fields
+	return nil
 }
 
 func (r *Record) Print() {

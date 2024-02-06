@@ -12,4 +12,7 @@ func TestLoadModFile(t *testing.T) {
 	for _, f := range modFile.Metadata.Fields {
 		f.Print()
 	}
+	for _, g := range modFile.Groups {
+		g.Print()
+	}
 }

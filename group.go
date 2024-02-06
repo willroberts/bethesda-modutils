@@ -69,6 +69,7 @@ func ReadGroup(r io.Reader) (*Group, error) {
 }
 
 func (g *Group) Print() {
+	fmt.Println("==========")
 	fmt.Println("Group Record Type:", string(g.RecordType))
 	fmt.Println("Group Size:", g.Size)
 	fmt.Println("Group Label:", string(g.Label))
