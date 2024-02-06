@@ -11,7 +11,7 @@ func TestReadBytes(t *testing.T) {
 	r := bytes.NewReader(b)
 	_, err := readBytes(4, r)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 }
 
@@ -20,7 +20,7 @@ func TestReadBytesOversized(t *testing.T) {
 	r := bytes.NewReader(b)
 	_, err := readBytes(4, r)
 	if err == nil {
-		t.Error("failed to detect error when reading too many bytes")
+		t.Fatal("failed to detect error when reading too many bytes")
 	}
 }
 
@@ -31,10 +31,10 @@ func TestReadUint16(t *testing.T) {
 	r := bytes.NewReader(b)
 	out, err := readUint16(r)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	if in != out {
-		t.Error("expected:", in, "got:", out)
+		t.Fatal("expected:", in, "got:", out)
 	}
 }
 
@@ -43,7 +43,7 @@ func TestReadUint16Oversized(t *testing.T) {
 	r := bytes.NewReader(b)
 	_, err := readUint16(r)
 	if err == nil {
-		t.Error("failed to detect error when reading too many bytes")
+		t.Fatal("failed to detect error when reading too many bytes")
 	}
 }
 
@@ -54,10 +54,10 @@ func TestReadUint32(t *testing.T) {
 	r := bytes.NewReader(b)
 	out, err := readUint32(r)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 	if in != out {
-		t.Error("expected:", in, "got:", out)
+		t.Fatal("expected:", in, "got:", out)
 	}
 }
 
@@ -66,6 +66,6 @@ func TestReadUint32Oversized(t *testing.T) {
 	r := bytes.NewReader(b)
 	_, err := readUint32(r)
 	if err == nil {
-		t.Error("failed to detect error when reading too many bytes")
+		t.Fatal("failed to detect error when reading too many bytes")
 	}
 }
