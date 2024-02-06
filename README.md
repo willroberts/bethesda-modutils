@@ -5,6 +5,7 @@ Tools for working with Bethesda's ESM and ESP file formats
 ## To Do
 
 - Parse Field data according to Field type
+- Add diff utility
 
 ## Reference Documentation
 
