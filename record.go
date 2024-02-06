@@ -67,13 +67,11 @@ func ReadRecord(r io.Reader) (*Record, error) {
 		return nil, err
 	}
 
-	// Testing field parser.
-	record.Print()
-	field, err := ReadField(bytes.NewReader(record.Data))
+	_, err = ReadField(bytes.NewReader(record.Data))
 	if err != nil {
 		return nil, err
 	}
-	field.Print()
+	//field.Print()
 
 	return record, nil
 }

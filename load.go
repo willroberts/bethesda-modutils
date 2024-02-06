@@ -27,11 +27,18 @@ func Load(filename string) (*ModFile, error) {
 		return nil, err
 	}
 
+	/* Testing group reads.
 	firstGroup, err := ReadGroup(m.rawBytes)
 	if err != nil {
 		return nil, err
 	}
-	firstGroup.Print()
+	firstGroup.Print() // SPEL
+	secondGroup, err := ReadGroup(m.rawBytes)
+	if err != nil {
+		return nil, err
+	}
+	secondGroup.Print() // LSCR
+	*/
 
 	return m, nil
 }
