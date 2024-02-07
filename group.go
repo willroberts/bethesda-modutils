@@ -96,9 +96,3 @@ func (g *Group) readAllRecords() error {
 	g.Records = records
 	return nil
 }
-
-func (g *Group) Print() {
-	fmt.Printf("%s group has size %d and timestamp %d\n", string(g.Label), g.Size, g.Timestamp)
-	//fmt.Println("Group Type:", string(g.GroupType)) // Always blank?
-	//fmt.Println("Group VCSInfo:", g.VCSInfo) // Always blank?
-}

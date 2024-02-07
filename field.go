@@ -35,32 +35,43 @@ func ReadField(r io.Reader) (*Field, error) {
 	return field, nil
 }
 
+// TODO: Move to espcat after removing private field/method access.
 func (f *Field) Print() error {
 	fType := string(f.Type)
-	fmt.Printf("%s field has value: ", fType)
 	r := bytes.NewReader(f.rawData)
 
 	switch fType {
 	case "HEDR": // Header.
+		fmt.Printf("  - %s field has value: ", fType)
 		fmt.Println(f.rawData) // FIXME: Parsing. Are these flags? 12 bytes.
+	case "ANAM": // Abbreviated Name.
+		//fmt.Printf("  - %s field has value: ", fType)
+		//fmt.Println(string(f.rawData))
+	case "EDID": // Specific ID.
+		fmt.Printf("  - %s field has value: ", fType)
+		fmt.Println(string(f.rawData))
+	case "FULL": // Full Name.
+		fmt.Printf("  - %s field has value: ", fType)
+		fmt.Println(string(f.rawData))
+	case "DESC":
+		fmt.Printf("  - %s field has value: ", fType)
+		fmt.Println(string(f.rawData))
 	case "CNAM":
+		fmt.Printf("  - %s field has value: ", fType)
 		fmt.Println(string(f.rawData))
 	case "MAST": // Master File.
+		fmt.Printf("  - %s field has value: ", fType)
 		fmt.Println(string(f.rawData))
-	case "DATA": // Unused?
-		v, err := readUint32(r)
-		if err != nil {
-			return err
-		}
-		fmt.Println(v)
-	case "INTV": // Internal Version?
+	case "INTV": // Internal Version.
+		fmt.Printf("  - %s field has value: ", fType)
 		v, err := readUint16(r)
 		if err != nil {
 			return err
 		}
 		fmt.Println(v)
 	default:
-		fmt.Println("Unknown field type", fType)
+		//fmt.Printf("  - %s field has value: ", fType)
+		//fmt.Println(f.rawData)
 	}
 
 	return nil

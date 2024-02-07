@@ -2,7 +2,6 @@ package modutils
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 )
 
@@ -92,12 +91,4 @@ func (r *Record) readAllFields() error {
 
 	r.Fields = fields
 	return nil
-}
-
-func (r *Record) Print() {
-	fmt.Printf("%s record has size %d and version %d\n", string(r.Type), r.Size, r.Version)
-	fmt.Println("- Flags:", r.Flags)
-	fmt.Println("- FormID:", r.FormID)
-	//fmt.Println("- Timestamp:", r.Timestamp)
-	//fmt.Println("- VCSInfo:", r.VCSInfo)
 }

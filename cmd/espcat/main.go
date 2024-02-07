@@ -25,22 +25,31 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("=== Mod Metadata ===")
-	mod.Metadata.Print()
-	fmt.Println("=== Metadata Fields ===")
+	fmt.Println("Mod File:", espPath)
+	printRecord(mod.Metadata)
 	for _, f := range mod.Metadata.Fields {
 		f.Print()
 	}
-	fmt.Println("=== Mod Groups ===")
 	for _, g := range mod.Groups {
-		g.Print()
-		fmt.Println("=== Group Records ===")
+		if string(g.Label) == "PERK" {
+			continue // Skip perks for a sec.
+		}
+		fmt.Println("Group:", string(g.Label))
 		for _, r := range g.Records {
-			r.Print()
-			fmt.Println("=== Record Fields ===")
+			printRecord(r)
 			for _, f := range r.Fields {
 				f.Print()
 			}
 		}
 	}
+}
+
+func printRecord(r *modutils.Record) {
+	fmt.Printf(
+		"- Record %s has FormID %d, Flags %d, and Version %d\n",
+		string(r.Type),
+		r.FormID,
+		r.Flags,
+		r.Version,
+	)
 }
