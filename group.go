@@ -28,6 +28,10 @@ func ReadGroup(r io.Reader) (*Group, error) {
 		return nil, err
 	}
 
+	if string(g.RecordType) != "GRUP" {
+		return nil, fmt.Errorf("invalid group record type: expected GRUP, got %s", string(g.RecordType))
+	}
+
 	s := string(g.RecordType)
 	if s != "GRUP" {
 		return nil, fmt.Errorf("expected record type GRUP; got %s", s)
@@ -94,11 +98,7 @@ func (g *Group) readAllRecords() error {
 }
 
 func (g *Group) Print() {
-	fmt.Println("==========")
-	fmt.Println("Group Record Type:", string(g.RecordType))
-	fmt.Println("Group Size:", g.Size)
-	fmt.Println("Group Label:", string(g.Label))
-	fmt.Println("Group Type:", string(g.GroupType))
-	fmt.Println("Group Timestamp:", g.Timestamp)
-	fmt.Println("Group VCSInfo:", g.VCSInfo)
+	fmt.Printf("%s group has size %d and timestamp %d\n", string(g.Label), g.Size, g.Timestamp)
+	//fmt.Println("Group Type:", string(g.GroupType)) // Always blank?
+	//fmt.Println("Group VCSInfo:", g.VCSInfo) // Always blank?
 }

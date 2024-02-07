@@ -1,6 +1,7 @@
 package modutils
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 )
@@ -8,7 +9,8 @@ import (
 type Field struct {
 	Type []byte
 	Size uint16
-	Data []byte
+
+	rawData []byte
 }
 
 func ReadField(r io.Reader) (*Field, error) {
@@ -25,7 +27,7 @@ func ReadField(r io.Reader) (*Field, error) {
 		return nil, err
 	}
 
-	field.Data, err = readBytes(uint(field.Size), r)
+	field.rawData, err = readBytes(uint(field.Size), r)
 	if err != nil {
 		return nil, err
 	}
@@ -33,9 +35,33 @@ func ReadField(r io.Reader) (*Field, error) {
 	return field, nil
 }
 
-func (f *Field) Print() {
-	fmt.Println("==========")
-	fmt.Println("Field Type:", string(f.Type))
-	fmt.Println("Field Size:", f.Size)
-	fmt.Println("Field Data:", string(f.Data))
+func (f *Field) Print() error {
+	fType := string(f.Type)
+	fmt.Printf("%s field has value: ", fType)
+	r := bytes.NewReader(f.rawData)
+
+	switch fType {
+	case "HEDR": // Header.
+		fmt.Println(f.rawData) // FIXME: Parsing. Are these flags? 12 bytes.
+	case "CNAM":
+		fmt.Println(string(f.rawData))
+	case "MAST": // Master File.
+		fmt.Println(string(f.rawData))
+	case "DATA": // Unused?
+		v, err := readUint32(r)
+		if err != nil {
+			return err
+		}
+		fmt.Println(v)
+	case "INTV": // Internal Version?
+		v, err := readUint16(r)
+		if err != nil {
+			return err
+		}
+		fmt.Println(v)
+	default:
+		fmt.Println("Unknown field type", fType)
+	}
+
+	return nil
 }

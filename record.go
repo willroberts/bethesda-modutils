@@ -95,12 +95,9 @@ func (r *Record) readAllFields() error {
 }
 
 func (r *Record) Print() {
-	fmt.Println("==========")
-	fmt.Println("Record Type:", string(r.Type))
-	fmt.Println("Record Size:", r.Size)
-	fmt.Println("Record Flags:", r.Flags)
-	fmt.Println("Record FormID:", r.FormID)
-	fmt.Println("Record Timestamp:", r.Timestamp)
-	fmt.Println("Record VCSInfo:", r.VCSInfo)
-	fmt.Println("Record Version:", r.Version)
+	fmt.Printf("%s record has size %d and version %d\n", string(r.Type), r.Size, r.Version)
+	fmt.Println("- Flags:", r.Flags)
+	fmt.Println("- FormID:", r.FormID)
+	//fmt.Println("- Timestamp:", r.Timestamp)
+	//fmt.Println("- VCSInfo:", r.VCSInfo)
 }
