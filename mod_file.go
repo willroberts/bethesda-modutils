@@ -6,6 +6,7 @@ import (
 	"os"
 )
 
+// ModFile represents an ESM, ESP, or ESL file, based on the NetImmerse IFF format.
 type ModFile struct {
 	Size     uint
 	Metadata *Record
@@ -14,6 +15,7 @@ type ModFile struct {
 	rawData io.Reader
 }
 
+// LoadModFile will parse and return the given file.
 func LoadModFile(filename string) (*ModFile, error) {
 	m := &ModFile{}
 

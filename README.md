@@ -4,11 +4,16 @@ Tools for working with Bethesda's ESM and ESP file formats
 
 ## To Do
 
-- Parse Field data according to Field type
-- Linting
-- Docs
-- Add `espcat` utility
+- Add parsers for unknown Field types
 - Add `espdiff` utility
+
+## Library Usage
+
+TBD
+
+## Command-Line Tools
+
+TBD
 
 ## Reference Documentation
 

@@ -6,6 +6,7 @@ import (
 	"io"
 )
 
+// Group is a collection of Records and associated metadata.
 type Group struct {
 	RecordType []byte
 	Size       uint32
@@ -19,6 +20,7 @@ type Group struct {
 	rawData []byte
 }
 
+// ReadGroup parses bytes from a Reader and returns a Group.
 func ReadGroup(r io.Reader) (*Group, error) {
 	g := &Group{}
 	var err error

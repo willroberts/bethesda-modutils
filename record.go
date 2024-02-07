@@ -5,6 +5,7 @@ import (
 	"io"
 )
 
+// Record is a collection of Fields and associated metadata.
 type Record struct {
 	Type      []byte
 	Size      uint32
@@ -19,6 +20,7 @@ type Record struct {
 	rawData []byte
 }
 
+// ReadRecord parses bytes from a Reader and returns a Record.
 func ReadRecord(r io.Reader) (*Record, error) {
 	record := &Record{}
 	var err error

@@ -5,6 +5,7 @@ import (
 	"io"
 )
 
+// Field is a value container for various value types.
 type Field struct {
 	Type []byte
 	Size uint16
@@ -16,6 +17,7 @@ type Field struct {
 	rawData []byte
 }
 
+// ReadField parses bytes from a Reader and returns a Field.
 func ReadField(r io.Reader) (*Field, error) {
 	field := &Field{}
 	var err error
@@ -35,14 +37,14 @@ func ReadField(r io.Reader) (*Field, error) {
 		return nil, err
 	}
 
-	if err := field.ParseValue(); err != nil {
+	if err := field.parseValue(); err != nil {
 		return nil, err
 	}
 
 	return field, nil
 }
 
-func (f *Field) ParseValue() error {
+func (f *Field) parseValue() error {
 	r := bytes.NewReader(f.rawData)
 
 	switch string(f.Type) {
