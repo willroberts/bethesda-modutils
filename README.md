@@ -32,6 +32,8 @@ mod, err := modutils.LoadModFile(pathToModFile)
 if err != nil {
 	// Handle error.
 }
+r := mod.Metadata // Access the metadata record.
+g :- mod.Groups // Access the top-level groups.
 ```
 
 You will then have access to all Groups, Records, and Fields within the mod.
