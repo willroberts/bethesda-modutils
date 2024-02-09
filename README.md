@@ -1,6 +1,6 @@
 # bethesda-modutils
 
-Tools for working with Bethesda's ESM and ESP file formats
+Tools for working with Bethesda's ESM, ESP, and ESL file formats
 
 ## To Do
 
