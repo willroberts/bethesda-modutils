@@ -18,7 +18,7 @@ Every ESM, ESP, and ESL file used in Bethesda games has three key data structure
 
 - Groups, which are collections of Records
 - Records, which are ccollections of Fields
-- Fields, which contain arbitrary data based on the type of Field
+- Fields, which contain arbitrary data based on the Field type
 
 These types are modeled in `group.go`, `record.go`, and `field.go`, respectively.
 
