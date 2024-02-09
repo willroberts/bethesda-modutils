@@ -9,11 +9,34 @@ Tools for working with Bethesda's ESM and ESP file formats
 
 ## Library Usage
 
-TBD
+Every ESM, ESP, and ESL file used in Bethesda games has three key data structures:
+
+- Groups, which are collections of Records
+- Records, which are ccollections of Fields
+- Fields, which contain arbitrary data based on the type of Field
+
+These types are modeled in `group.go`, `record.go`, and `field.go`, respectively.
+
+At the top level, each mod file contains a metadata Record, and a collection of Groups.
+This structure is modeled in `mod_file.go`.
+See [Reference Documentation](#reference-documentation) below for more detail.
+
+To parse and load a mod file, use `modutils.LoadModFile()`:
+```go
+mod, err := modutils.LoadModFile(pathToModFile)
+if err != nil {
+	// Handle error.
+}
+```
+
+You will then have access to all Groups, Records, and Fields within the mod.
 
 ## Command-Line Tools
 
-TBD
+There are also two command-line tools in this repo:
+
+- `espcat`, for printing a mod's metadata and field values
+- `espdiff`, for comparing two mod files (TBD)
 
 ## Reference Documentation
 
