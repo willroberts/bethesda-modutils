@@ -1,6 +1,11 @@
 # bethesda-modutils
 
-Tools for working with Bethesda's ESM, ESP, and ESL file formats
+Tools for working with Bethesda's ESM, ESP, and ESL file formats.
+
+These file formats are used to store data, configuration values, and scripts for
+Bethesda games, as well as mods for those games. These formats are based on the
+NetImmerse NIF format, which has been in use since 2002. As a result, these tools
+can be used with files for The Elder Scrolls, Fallout, and Starfield.
 
 ## To Do
 
